@@ -28,7 +28,7 @@ echoo = dict() #for chat
 
 
 def send_url(url):
-    print(url)
+    #print(url)
     response = requests.get(url)
     return response.json()
 
@@ -104,7 +104,7 @@ def introduce_to_database(chat_id , username):
     con = sl.connect(str(database_lacation))
     cur = con.cursor()
     query = "INSERT INTO users (chat_id, first_name, username) VALUES ({},\"{}\",\"{}\")".format(chat_id, name, username)
-    print("\n\n", query, "\n\n")
+    #print("\n\n", query, "\n\n")
     cur.execute(query)
     con.commit()
     con.close()
@@ -142,7 +142,7 @@ def write_in_database(key, key2, chat_id, first_name="", number=None):
     elif key == "data_photo":
         query = "INSERT INTO messages (chat_id, photo_id, year, month, day, person_id2) VALUES ({},\"{}\",\"{}\",\"{}\",\"{}\",\"{}\")".format(chat_id, key2, tarikh[0], tarikh[1], tarikh[2],first_name)
             
-    print("\n\n", query, "\n\n")
+    #print("\n\n", query, "\n\n")
     cur.execute(query)
     con.commit()
     con.close()
@@ -174,7 +174,7 @@ def read_database(number,id_person ,marhale3=None, shomare=1): #shomare hamoon s
         first_name=sex=profile_photo_id=bio=person_id2=city=age=None
         query = "SELECT * from users WHERE chat_id = {}".format(id_person)
         for x in cur.execute(query):
-            print(x)
+            #print(x)
             for column_number in range(1, 9):
                 if column_number==1: first_name = x[column_number]
                 elif column_number==3:
@@ -213,7 +213,7 @@ def read_database(number,id_person ,marhale3=None, shomare=1): #shomare hamoon s
         count = 0
         #print(marhale3)
         query = "SELECT * FROM list WHERE day={}".format(marhale3)
-        print("\n\n\n\n",query,"\n\n\n\n")
+        #print("\n\n\n\n",query,"\n\n\n\n")
         for a in cur.execute(query):
             if start == count:
                 username = read_database(7, a[0])
@@ -250,7 +250,7 @@ def read_database(number,id_person ,marhale3=None, shomare=1): #shomare hamoon s
 
     elif number ==8:
         query = "SELECT person_id2 FROM users WHERE sex=\"{}\"".format(marhale3)
-        print("\n\n\n\n",query,"\n\n\n\n")
+        #print("\n\n\n\n",query,"\n\n\n\n")
         last = ""
         for a in cur.execute(query):
             if a[0] != None:
@@ -277,7 +277,7 @@ def read_database(number,id_person ,marhale3=None, shomare=1): #shomare hamoon s
         count = 0
         #print(marhale3)
         query = "SELECT * FROM users"
-        print("\n\n\n\n",query,"\n\n\n\n")
+        #print("\n\n\n\n",query,"\n\n\n\n")
         for a in cur.execute(query):
             if start == count:
                 text += "نام: " + a[1] + "%0A" + "آیدی: " +" /{}".format(a[6])+ "%0A〰️〰️〰️〰️〰️〰️〰️〰️〰️〰️〰️%0A"
@@ -432,7 +432,7 @@ def identify_text(getUpdates):
                 
                 
             else:
-                print(echoo)
+                #print(echoo)
                 namaloom(chat_id)
 
         elif getUpdates["result"][i].get("edited_message") != None:
@@ -478,7 +478,7 @@ def identify_text(getUpdates):
 
                 elif callback_data == "روز قبل":
                     rooz = (react2[chat_id][2] - 1)
-                    print(rooz, type(rooz))
+                    #print(rooz, type(rooz))
 
                     text1 = read_database(4,chat_id,rooz)
                     listt2(text1, chat_id, rooz)
@@ -562,12 +562,12 @@ def identify_text(getUpdates):
                     send_message(text, chat_id)
 
             elif callback_data.startswith("connect"):
-                print("\n\n\n\ni am here\n\n\n\n")
+                #print("\n\n\n\ni am here\n\n\n\n")
                 id_2 = callback_data.split("_")
                 echoo[chat_id]= int(id_2[1])
                 echoo[int(id_2[1])]= chat_id
-                print("\n\n\n\n",echoo,"\n\n\n\n")
-                print("\n\n\n\n",id_2,"\n\n\n\n")
+                #print("\n\n\n\n",echoo,"\n\n\n\n")
+                #print("\n\n\n\n",id_2,"\n\n\n\n")
                 
                 person,name = read_database(11,chat_id)
                 text = "🎈چت شما با کاربر /{} شروع شد🎈%0Aبا سلاااام ؛ صحبت خودت رو آغاز کن!".format(person)
@@ -650,7 +650,7 @@ def change_person_Specifications(chat_id, text, photo_id=None, callback_data=Non
             text2 = "تغییرات ذخیره شد ✅"
             if callback_data == "m":
                 last_person_id = read_database(8,None,"m").split("_")
-                print(type(last_person_id), last_person_id)
+                #print(type(last_person_id), last_person_id)
                 num = int(last_person_id[1]) +1
                 new_id_person_2 = last_person_id[0] + "_" + '%05d' %num
                 write_in_database("person_id2", new_id_person_2, chat_id)
@@ -691,7 +691,7 @@ def change_person_Specifications(chat_id, text, photo_id=None, callback_data=Non
             send_message(text2, chat_id)
             if callback_data == "m":
                 last_person_id = read_database(8,None,"m").split("_")
-                print(type(last_person_id), last_person_id)
+                #print(type(last_person_id), last_person_id)
                 num = int(last_person_id[1]) +1
                 new_id_person_2 = last_person_id[0] + "_" + '%05d' %num
                 write_in_database("person_id2", new_id_person_2, chat_id)
