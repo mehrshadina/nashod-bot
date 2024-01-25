@@ -1,2 +1,2 @@
 # nashod_bot
-its just a telegram bot
+This is a telegram bot that I wrote when I was young.
